@@ -10,7 +10,7 @@ On all systems, on first run, the application will download the necessary langua
 
 ## Scripts
 
-- `mic-transcript-openai-whisper.py` uses the OpenAI Whisper library locally (no internet needed) to transcribe the audio input. Loops until the user stops with CTRL+C.
+- `mic-transcribe-openai-whisper.py` uses the OpenAI Whisper library locally (no internet needed) to transcribe the audio input. Loops until the user stops with CTRL+C.
 
 ## Requirements
 
@@ -57,3 +57,8 @@ Assuming you have Python 3.8+ installed, the following steps will get you starte
 5. Install the Python dependencies: `pip install -r requirements.txt`.
 6. Run the script of your choice with `python <script_name>.py`.
 
+## Roadmap
+
+- [ ] Add more scripts to demonstrate different models and techniques.
+- [ ] Add a script for transcribing audio files passed as arguments.
+- [ ] Add a bootstrap script for Windows.
