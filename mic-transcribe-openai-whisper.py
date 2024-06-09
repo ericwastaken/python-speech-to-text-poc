@@ -30,7 +30,8 @@ def capture_audio(mic_index):
     # Initialize the recognizer
     recognizer = sr.Recognizer()
     recognizer.energy_threshold = 300  # Adjust based on ambient noise levels
-    recognizer.pause_threshold = 0.8  # Time to wait before considering speech has ended
+    recognizer.dynamic_energy_threshold = True # Adjust energy threshold dynamically
+    recognizer.pause_threshold = 0.6  # Time to wait before considering speech has ended
 
     # Whisper model name
     model_name = "base"  # model can be any of tiny, base, small, medium, large, tiny.en, base.en, small.en, medium.en. See https://github.com/openai/whisper for more details.

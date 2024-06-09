@@ -1,4 +1,4 @@
-SpeechRecognition[whisper-api]==3.10.4
+SpeechRecognition[whisper-local]==3.10.4
 PyAudio==0.2.14
 openai-whisper==20231117
 torch==2.3.1
