@@ -4,6 +4,8 @@ import warnings
 import time
 import torch
 import sys
+import tempfile
+import os
 
 
 def check_gpu():
@@ -28,6 +30,10 @@ def capture_audio():
     recognizer.energy_threshold = 300  # Adjust based on ambient noise levels
     recognizer.pause_threshold = 0.8  # Time to wait before considering speech has ended
 
+    # Load the Whisper model and move it to the GPU if available
+    device = "cuda" if using_gpu else "cpu"
+    model = whisper.load_model("base").to(device)
+
     while True:
         try:
             # Use the microphone as the audio source
@@ -38,18 +44,16 @@ def capture_audio():
                 # Listen for the first phrase and extract it into audio data
                 audio_data = recognizer.listen(source)
 
-            # Save the audio data to a WAV file
-            with open("audio.wav", "wb") as file:
-                file.write(audio_data.get_wav_data())
-
-            # Load the Whisper model
-            model = whisper.load_model("base")
+            # Save the audio data to a temporary WAV file
+            with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as temp_wav_file:
+                temp_wav_file.write(audio_data.get_wav_data())
+                temp_wav_file_path = temp_wav_file.name
 
             # Start timing the transcription process
             start_time = time.time()
 
             # Transcribe the audio file using Whisper
-            result = model.transcribe("audio.wav")
+            result = model.transcribe(temp_wav_file_path)
 
             # End timing the transcription process
             end_time = time.time()
@@ -59,6 +63,9 @@ def capture_audio():
 
             # Print the time taken for the transcription
             print(f"Time taken for transcription: {end_time - start_time:.2f} seconds")
+
+            # Remove the temporary file
+            os.remove(temp_wav_file_path)
 
         except KeyboardInterrupt:
             print("\nProcess interrupted by user. Exiting...")
@@ -72,4 +79,3 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("\nProcess interrupted by user. Exiting...")
         sys.exit(0)
-

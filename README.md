@@ -18,7 +18,7 @@ On all systems, on first run, the application will download the necessary langua
 
 > **Note:** See the list of bootstrap scripts explained below for automated installation of the requirements.
 
-- Python 3.11
+- Python 3.11 
   macOS: `brew install python@3.11`
 - Python dependencies in **requirements.txt**.
 - Homebrew (macOS) or Chocolatey (Windows) for package management.
@@ -28,11 +28,11 @@ On all systems, on first run, the application will download the necessary langua
   Debian/Ubuntu: `sudo apt-get install python-pyaudio python3-pyaudio`
 - Flac Encoder
   macOS: `brew install flac`
-  Windows: `choco install flac` (if not already installed)
+  Windows: In an admin shell, run `choco install flac` (if not already installed)
   Debian/Ubuntu: `sudo apt-get install flac` (if not already installed)
 - ffmpeg
   macOS: `brew install ffmpeg`
-  Windows: `choco install ffmpeg` (if not already installed)
+  Windows: In an admin shell, run `choco install ffmpeg` (if not already installed)
   Debian/Ubuntu: `sudo apt-get install ffmpeg` (if not already installed)
 
 **Bootstrap Scripts**
@@ -44,7 +44,12 @@ On all systems, on first run, the application will download the necessary langua
 If running on a supported NVIDIA GPU (not supported in Apple Silicon), the following are also necessary:
 
 - [CUDA Toolkit](https://developer.nvidia.com/cuda-downloads)
-- `pip install torch torchvision torchaudio`
+  - CUDA Toolkit also requires [Visual Studio for Windows](https://visualstudio.microsoft.com/) in order to install all components correctly.
+- PyTorch needs to use a special version with CUDA support. Install it with the following commands:
+  `pip uninstall torch torchvision torchaudio`
+  `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118`
+
+You can run the test script `check-torch-and-cuda.py` to verify the installation of PyTorch with CUDA support.
 
 ## First Time Setup
 
