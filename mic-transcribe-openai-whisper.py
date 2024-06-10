@@ -16,10 +16,12 @@ def check_gpu():
         print("No compatible GPU detected. Using CPU for transcription.")
         return False
 
+
 def list_microphones():
     print("Available microphones:")
     for index, name in enumerate(sr.Microphone.list_microphone_names()):
         print(f"{index}: {name}")
+
 
 def capture_audio(mic_index):
     # Check if GPU is available
@@ -32,11 +34,13 @@ def capture_audio(mic_index):
     # Initialize the recognizer
     recognizer = sr.Recognizer()
     recognizer.energy_threshold = 300  # Adjust based on ambient noise levels
-    recognizer.dynamic_energy_threshold = True # Adjust energy threshold dynamically
+    recognizer.dynamic_energy_threshold = True  # Adjust energy threshold dynamically
     recognizer.pause_threshold = 0.6  # Time to wait before considering speech has ended
 
     # Whisper model name
-    model_name = "base"  # model can be any of tiny, base, small, medium, large, tiny.en, base.en, small.en, medium.en. See https://github.com/openai/whisper for more details.
+    # model can be any of tiny, base, small, medium, large, tiny.en, base.en, small.en, medium.en.
+    # See https://github.com/openai/whisper for more details.
+    model_name = "base"
 
     # Load the Whisper model and move it to the GPU if available
     device = "cuda" if using_gpu else "cpu"
@@ -58,7 +62,6 @@ def capture_audio(mic_index):
             # Transcribe the audio using Whisper
             result = recognizer.recognize_whisper(audio_data, model=model_name)
 
-
             # End timing the transcription process
             end_time = time.time()
 
@@ -72,10 +75,10 @@ def capture_audio(mic_index):
             print("Whisper could not understand audio")
         except sr.RequestError as e:
             print(f"Could not request results from Whisper; {e}")
-
         except KeyboardInterrupt:
             print("\nProcess interrupted by user. Exiting...")
             break
+
 
 if __name__ == "__main__":
     list_microphones()
