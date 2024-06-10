@@ -4,6 +4,8 @@ import warnings
 import time
 import torch
 import sys
+import tempfile
+import os
 
 
 def check_gpu():
@@ -36,6 +38,10 @@ def capture_audio(mic_index):
     # Whisper model name
     model_name = "base"  # model can be any of tiny, base, small, medium, large, tiny.en, base.en, small.en, medium.en. See https://github.com/openai/whisper for more details.
 
+    # Load the Whisper model and move it to the GPU if available
+    device = "cuda" if using_gpu else "cpu"
+    model = whisper.load_model("base").to(device)
+
     while True:
         try:
             # Use the microphone as the audio source
@@ -52,6 +58,7 @@ def capture_audio(mic_index):
             # Transcribe the audio using Whisper
             result = recognizer.recognize_whisper(audio_data, model=model_name)
 
+
             # End timing the transcription process
             end_time = time.time()
 
@@ -65,6 +72,7 @@ def capture_audio(mic_index):
             print("Whisper could not understand audio")
         except sr.RequestError as e:
             print(f"Could not request results from Whisper; {e}")
+
         except KeyboardInterrupt:
             print("\nProcess interrupted by user. Exiting...")
             break
