@@ -48,8 +48,8 @@ If running on a supported NVIDIA GPU (not supported in Apple Silicon), the follo
 - [CUDA Toolkit](https://developer.nvidia.com/cuda-downloads)
   - CUDA Toolkit also requires [Visual Studio for Windows](https://visualstudio.microsoft.com/) in order to install all components correctly.
 - PyTorch needs to use a special version with CUDA support. Install it with the following commands:
-  `pip uninstall torch torchvision torchaudio`
-  `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118`
+  - `pip uninstall torch torchvision torchaudio`
+  - `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118`
 
 You can run the test script `check-torch-and-cuda.py` to verify the installation of PyTorch with CUDA support.
 
