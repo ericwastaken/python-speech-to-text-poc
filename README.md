@@ -67,3 +67,4 @@ Assuming you have Python 3.8+ installed, the following steps will get you starte
 - [ ] Add more scripts to demonstrate different models and techniques.
 - [ ] Add a script for transcribing audio files passed as arguments.
 - [ ] Add a bootstrap script for Windows.
+- [ ] Consider implementing [insenely-fast-whisper](https://github.com/Vaibhavs10/insanely-fast-whisper) for faster transcriptions.
