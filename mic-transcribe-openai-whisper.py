@@ -4,8 +4,6 @@ import warnings
 import time
 import torch
 import sys
-import tempfile
-import os
 
 
 def check_gpu():
@@ -23,7 +21,7 @@ def list_microphones():
         print(f"{index}: {name}")
 
 
-def capture_audio(mic_index):
+def capture_audio(mic_index_param):
     # Check if GPU is available
     using_gpu = check_gpu()
 
@@ -44,12 +42,12 @@ def capture_audio(mic_index):
 
     # Load the Whisper model and move it to the GPU if available
     device = "cuda" if using_gpu else "cpu"
-    model = whisper.load_model("base").to(device)
+    model = whisper.load_model("base.en").to(device)
 
     while True:
         try:
             # Use the microphone as the audio source
-            with sr.Microphone(device_index=mic_index) as source:
+            with sr.Microphone(device_index=mic_index_param) as source:
                 print("Please say something:")
                 # Adjust for ambient noise
                 recognizer.adjust_for_ambient_noise(source, duration=1)
